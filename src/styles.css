@@ -1,0 +1,677 @@
+/*
+ * Paper by day, chalkboard by night.
+ * Every colour is a custom property defined here, once per theme.
+ */
+
+:root {
+  color-scheme: light;
+  --page: #eef2f8;
+  --paper: #f9fbfe;
+  --grid: #dde6f2;
+  --ink: #1e2533;
+  --ink-soft: #5a6478;
+  --line: #3a4356;
+  --x: #2f54d4;
+  --o: #e0483e;
+  --win-glow: rgba(47, 84, 212, 0.14);
+  --control: #e3e9f2;
+  --control-hover: #d6dfeb;
+  --control-active: #ffffff;
+  --focus: #2f54d4;
+  --hint-win: #1f8a4c;
+  --hint-draw: #8a7a1f;
+  --hint-loss: #b8352d;
+  --shadow: 0 1px 2px rgba(30, 37, 51, 0.06), 0 12px 32px -12px rgba(30, 37, 51, 0.22);
+  --grid-size: 22px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --page: #17211f;
+    --paper: #1e2b28;
+    --grid: #263532;
+    --ink: #e8eee9;
+    --ink-soft: #9fb0a9;
+    --line: #c9d4ce;
+    --x: #f3f6f1;
+    --o: #f4d35e;
+    --win-glow: rgba(244, 211, 94, 0.12);
+    --control: #26332f;
+    --control-hover: #2e3d39;
+    --control-active: #3a4b46;
+    --focus: #f4d35e;
+    --hint-win: #6fd39a;
+    --hint-draw: #e6d27a;
+    --hint-loss: #ff8f86;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 36px -14px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #17211f;
+  --paper: #1e2b28;
+  --grid: #263532;
+  --ink: #e8eee9;
+  --ink-soft: #9fb0a9;
+  --line: #c9d4ce;
+  --x: #f3f6f1;
+  --o: #f4d35e;
+  --win-glow: rgba(244, 211, 94, 0.12);
+  --control: #26332f;
+  --control-hover: #2e3d39;
+  --control-active: #3a4b46;
+  --focus: #f4d35e;
+  --hint-win: #6fd39a;
+  --hint-draw: #e6d27a;
+  --hint-loss: #ff8f86;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 36px -14px rgba(0, 0, 0, 0.6);
+}
+
+/* ------------------------------------------------------------------ base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.app {
+  width: min(460px, 100%);
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ------------------------------------------------------------------ header */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: var(--control);
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Show the icon for the theme you would switch to. */
+.icon-sun {
+  display: none;
+}
+
+:root[data-effective-theme='dark'] .icon-sun {
+  display: block;
+}
+
+:root[data-effective-theme='dark'] .icon-moon {
+  display: none;
+}
+
+.status {
+  margin: 4px 0 0;
+  min-height: 2.6rem;
+  font-size: clamp(1.75rem, 7vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.status .dots::after {
+  content: '';
+  animation: dots 1s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+/* ------------------------------------------------------------------ scoreboard */
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--control);
+}
+
+.score-name {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.score-mark {
+  font-weight: 800;
+}
+
+.score-x .score-mark {
+  color: var(--x);
+}
+
+.score-o .score-mark {
+  color: var(--o);
+}
+
+.score-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+/* ------------------------------------------------------------------ board */
+
+.board-wrap {
+  position: relative;
+  width: min(420px, 100%);
+  margin: 4px auto 0;
+}
+
+.board {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 4%;
+  border-radius: 14px;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: center;
+  box-shadow: var(--shadow);
+}
+
+.board.shake {
+  animation: shake 420ms ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px) rotate(-0.6deg); }
+  40% { transform: translateX(6px) rotate(0.5deg); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(2px); }
+}
+
+/* Hand-drawn grid lines and the winning strike live in one overlay. */
+.board-lines {
+  position: absolute;
+  inset: 4%;
+  width: 92%;
+  height: 92%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
+}
+
+/* The strike sits above the marks it crosses out. */
+.board-lines.board-strike {
+  z-index: 4;
+}
+
+.grid-line {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.board-lines.sketch .grid-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 520ms cubic-bezier(0.6, 0, 0.3, 1) forwards;
+}
+
+.board-lines.sketch .grid-line:nth-of-type(2) { animation-delay: 120ms; }
+.board-lines.sketch .grid-line:nth-of-type(3) { animation-delay: 240ms; }
+.board-lines.sketch .grid-line:nth-of-type(4) { animation-delay: 360ms; }
+
+.strike {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 360ms cubic-bezier(0.5, 0, 0.3, 1) 180ms forwards;
+  opacity: 0.85;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 6%;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+  z-index: 3;
+}
+
+.board:not(.locked) .cell.empty:hover {
+  background: var(--win-glow);
+}
+
+.board.locked .cell {
+  cursor: default;
+}
+
+.cell.win {
+  background: var(--win-glow);
+  box-shadow: 0 0 0 6px var(--win-glow);
+}
+
+.mark {
+  width: 78%;
+  height: 78%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.mark path {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.mark-x path {
+  stroke: var(--x);
+}
+
+.mark-o path {
+  stroke: var(--o);
+  stroke-width: 8;
+}
+
+.mark.draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 150ms ease-out forwards;
+}
+
+.mark.draw.mark-o path {
+  animation-duration: 250ms;
+}
+
+.mark.draw path:nth-of-type(2) {
+  animation-delay: 120ms;
+}
+
+/* Faint preview of your mark when hovering an empty square. */
+.preview {
+  position: absolute;
+  inset: 11%;
+  width: 78%;
+  height: 78%;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.board:not(.locked) .cell.empty:hover .preview {
+  opacity: 0.22;
+}
+
+/* "Show AI thinking" labels. */
+.hint {
+  position: absolute;
+  inset: auto 0 10% 0;
+  text-align: center;
+  font-size: clamp(0.75rem, 3.4vw, 0.9rem);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.hint-win { color: var(--hint-win); }
+.hint-draw { color: var(--hint-draw); }
+.hint-loss { color: var(--hint-loss); }
+
+/* ------------------------------------------------------------------ buttons */
+
+.actions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+}
+
+.button {
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--control);
+  font-weight: 650;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 80ms ease;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--control-hover);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.button-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.button-primary:hover:not(:disabled) {
+  background: var(--ink);
+  opacity: 0.9;
+}
+
+.link-button {
+  padding: 8px 2px;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------ settings */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.setting {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.setting legend {
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.settings.pvp .cpu-only {
+  display: none;
+}
+
+.segmented {
+  display: flex;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--control);
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented label {
+  flex: 1;
+  min-height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 6px 8px;
+  border-radius: 7px;
+  font-size: 0.9375rem;
+  text-align: center;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.segmented label:hover {
+  color: var(--ink);
+}
+
+.segmented input:checked + label {
+  background: var(--control-active);
+  color: var(--ink);
+  font-weight: 650;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.segmented input:focus-visible + label {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
+.toggles .link-button {
+  margin-left: auto;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+
+.switch-track {
+  position: relative;
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--control-hover);
+  transition: background-color 150ms ease;
+}
+
+.switch-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease;
+}
+
+.switch input:checked + .switch-track {
+  background: var(--x);
+}
+
+:root[data-effective-theme='dark'] .switch input:checked + .switch-track {
+  background: var(--o);
+}
+
+.switch input:checked + .switch-track::after {
+  transform: translateX(16px);
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ footer & dialog */
+
+.footer {
+  display: flex;
+  gap: 20px;
+  padding-top: 8px;
+  border-top: 1px solid var(--control-hover);
+}
+
+.dialog {
+  width: min(520px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 24px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.dialog::backdrop {
+  background: rgba(10, 14, 20, 0.5);
+}
+
+.dialog h2 {
+  margin: 0 0 8px;
+  font-size: 1.375rem;
+}
+
+.dialog h3 {
+  margin: 18px 0 4px;
+  font-size: 1rem;
+}
+
+.dialog p {
+  margin: 0 0 10px;
+  max-width: 68ch;
+}
+
+.dialog form {
+  margin-top: 16px;
+}
+
+.keys {
+  line-height: 2;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0 6px;
+  border-radius: 5px;
+  background: var(--control);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ------------------------------------------------------------------ motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+}

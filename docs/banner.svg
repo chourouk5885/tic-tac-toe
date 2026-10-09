@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" width="1280" height="440" role="img" aria-label="Tic-Tac-Toe with an unbeatable AI">
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#dde6f2" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#1e2533" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="440" rx="24" fill="#eef2f8"/>
+
+  <text x="84" y="190" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="78" font-weight="800" fill="#1e2533" letter-spacing="-2">Tic-Tac-Toe</text>
+  <text x="86" y="250" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28" fill="#5a6478">You can tie it. You can't beat it.</text>
+  <text x="86" y="318" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="20" fill="#5a6478">Minimax with alpha-beta pruning, in your browser.</text>
+  <text x="86" y="348" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="20" fill="#5a6478">Tested against every possible game. It never loses.</text>
+
+  <g transform="translate(818 40)">
+    <rect width="360" height="360" rx="18" fill="#f9fbfe" filter="url(#shadow)"/>
+    <rect width="360" height="360" rx="18" fill="url(#grid)"/>
+    <g transform="translate(30 30)" fill="none" stroke-linecap="round">
+      <g stroke="#3a4356" stroke-width="3.6">
+        <path d="M101 6 C99 80 102 170 100 294"/>
+        <path d="M200 6 C202 90 198 190 201 294"/>
+        <path d="M6 100 C90 102 190 98 294 101"/>
+        <path d="M6 201 C100 199 200 203 294 200"/>
+      </g>
+      <g stroke="#2f54d4" stroke-width="9">
+        <path d="M22 22 C38 40 56 58 78 79 M78 22 C60 40 42 59 22 78"/>
+        <path transform="translate(200 100)" d="M22 22 C38 40 56 58 78 79 M78 22 C60 40 42 59 22 78"/>
+        <path transform="translate(100 200)" d="M22 22 C38 40 56 58 78 79 M78 22 C60 40 42 59 22 78"/>
+      </g>
+      <g stroke="#e0483e" stroke-width="8">
+        <path transform="translate(200 0)" d="M52 18 C30 16 18 34 20 52 C22 72 38 83 55 81 C73 79 83 63 81 46 C79 29 66 18 46 21"/>
+        <path transform="translate(100 100)" d="M52 18 C30 16 18 34 20 52 C22 72 38 83 55 81 C73 79 83 63 81 46 C79 29 66 18 46 21"/>
+        <path transform="translate(0 200)" d="M52 18 C30 16 18 34 20 52 C22 72 38 83 55 81 C73 79 83 63 81 46 C79 29 66 18 46 21"/>
+      </g>
+      <path d="M273 23 Q148 158 23 277" stroke="#1e2533" stroke-width="7" opacity="0.85"/>
+    </g>
+  </g>
+</svg>
