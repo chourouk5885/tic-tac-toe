@@ -99,4 +99,6 @@ Every push to `main` runs the tests, builds the site and publishes it to GitHub 
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) — free to use, modify and share.
+
+<p align="center">If you enjoyed it, a ⭐ on the repo is the best way to say thanks.</p>
